@@ -1,0 +1,103 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Recognize";
+}
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">Face Recognition</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Camera Capture Section -->
+            <div class="card mb-4" id="takePhotoCard">
+                <div class="card-header text-center">
+                    <h5>Take a Photo</h5>
+                </div>
+                <div class="card-body text-center">
+                    <video id="camera" class="rounded mb-3" autoplay playsinline style="width: 100%; max-width: 400px; height: auto;"></video>
+                    <canvas id="snapshot" class="d-none" style="display: none;"></canvas>
+
+                    <div>
+                        <button class="btn btn-primary mt-3" id="captureBtn">
+                            <span class="material-icons">photo_camera</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Captured Image & Predicted Result -->
+            <div id="resultSection" class="card d-none">
+                <div class="card-header text-center">
+                    <h5>Prediction Result</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img id="capturedImage" src="#" alt="Captured Image" class="rounded mb-3" style="width: 100%; max-width: 400px; height: auto;">
+                    <h5 id="predictedResult" class="text-info"></h5>
+
+                    <!-- Reset Button -->
+                    <button class="btn btn-secondary mt-3" id="resetBtn">
+                        <span class="material-icons">refresh</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Accessing the Camera
+    const video = document.getElementById('camera');
+    const canvas = document.getElementById('snapshot');
+    const captureBtn = document.getElementById('captureBtn');
+    const capturedImage = document.getElementById('capturedImage');
+    const resultSection = document.getElementById('resultSection');
+    const takePhotoCard = document.getElementById('takePhotoCard');
+    const predictedResult = document.getElementById('predictedResult');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // Request camera access
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(error => {
+                console.error("Error accessing the camera:", error);
+            });
+    } else {
+        alert("Your browser does not support camera access.");
+    }
+
+    // Capture photo from video
+    captureBtn.addEventListener("click", function () {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // Display captured image and hide the Take a Photo card
+        capturedImage.src = canvas.toDataURL('image/png');
+        takePhotoCard.classList.add("d-none");
+        resultSection.classList.remove("d-none");
+
+        // Simulate the recognition result
+        setTimeout(() => {
+            // Here, you would replace this with an actual prediction from your server or ML model
+            predictedResult.textContent = "Predicted Person: John Doe"; // Example predicted result
+        }, 500); // Simulate some processing delay
+    });
+
+    // Reset button to start new prediction
+    resetBtn.addEventListener("click", function () {
+        // Clear the captured image and result
+        capturedImage.src = "";
+        predictedResult.textContent = "";
+
+        // Show Take a Photo card again, hide the result section
+        takePhotoCard.classList.remove("d-none");
+        resultSection.classList.add("d-none");
+    });
+</script>
+
+<!-- Optional: Add Bootstrap and other necessary files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-5o1k04Kz3pTImY6g5c2W/f6BzKhQ4qdF02IkBQ21h4zjBYDbI/a0HGXZG2FxzPi5"></script>

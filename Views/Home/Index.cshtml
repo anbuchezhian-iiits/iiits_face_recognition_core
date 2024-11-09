@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container text-center my-5">
+    <!-- Animated Welcome Heading -->
+    <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">Welcome to the Face Recognition Web App!</h1>
+    <p class="lead animate__animated animate__fadeInUp animate__delay-1s">
+        Seamlessly register, manage, and recognize faces with ease and precision.
+    </p>
+
+    <!-- Getting Started Section -->
+    <div class="mt-5 animate__animated animate__fadeIn animate__delay-2s">
+        <h3 class="text-primary fw-semibold">Getting Started</h3>
+        <p class="text-muted">Follow these steps to use the app:</p>
+
+        <!-- Instruction Cards with Hover Effect -->
+        <div class="row justify-content-center mt-4 g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold">Register New Faces</h5>
+                        <p class="card-text text-muted">Go to the <a href="/Registration/New" class="text-decoration-none">New Registration</a> page to add new individuals to the database.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold">View Registered Faces</h5>
+                        <p class="card-text text-muted">Check the <a href="/Registration/List" class="text-decoration-none">Registered List</a> to view, edit, or delete records.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold">Recognize a Face</h5>
+                        <p class="card-text text-muted">Use the <a href="/Recognize/Recognize" class="text-decoration-none">Recognize</a> feature to capture a photo and identify a person.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Alert with Animation -->
+        <div class="alert alert-info mt-5 animate__animated animate__bounceIn" role="alert">
+            <strong>Tip:</strong> Enable your camera permissions for best recognition results!
+        </div>
+
+        <!-- Credits Section with Link to Portfolio -->
+        <div class="credits-section mt-5 animate__animated animate__fadeInUp">
+            <p class="text-muted mb-1">Developed with ❤️ by <strong>Anburam</strong></p>
+            <a href="https://anburam.github.io/" target="_blank" class="btn btn-outline-primary btn-sm mt-2">
+                View My Portfolio
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap and Animation CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

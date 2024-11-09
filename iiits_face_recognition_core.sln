@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iiits_face_recognition_core", "iiits_face_recognition_core.csproj", "{96CC7D33-0A32-48ED-86A4-043276895795}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96CC7D33-0A32-48ED-86A4-043276895795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96CC7D33-0A32-48ED-86A4-043276895795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96CC7D33-0A32-48ED-86A4-043276895795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96CC7D33-0A32-48ED-86A4-043276895795}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7BE5A02E-F5FC-49C7-B81D-E0724D40E16F}
+	EndGlobalSection
+EndGlobal
