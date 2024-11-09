@@ -59,12 +59,23 @@
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
-    <!-- Sidebar Toggle Script -->
     <script>
         document.getElementById("menu-toggle").addEventListener("click", function (e) {
             e.preventDefault();
+
+            // Toggle the sidebar visibility
             document.getElementById("wrapper").classList.toggle("toggled");
             document.getElementById("page-content-wrapper").classList.toggle("toggled");
+
+            // Toggle the active state for the menu button
+            this.classList.toggle("active"); // Adds or removes 'active' class on click
+
+            // Ensure that the 'inactive' class is applied when the sidebar is collapsed
+            if (!document.getElementById("wrapper").classList.contains("toggled")) {
+                this.classList.add("inactive"); // Adds 'inactive' class when sidebar is collapsed
+            } else {
+                this.classList.remove("inactive"); // Removes 'inactive' class when sidebar is active
+            }
         });
 
         // Toggle Registration Submenu with Expand/Collapse Arrows

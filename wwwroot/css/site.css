@@ -30,6 +30,7 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Sidebar */
 #sidebar-wrapper {
     width: 250px;
     height: 100%;
@@ -41,6 +42,7 @@ body {
     z-index: 100;
 }
 
+/* Page Content */
 #page-content-wrapper {
     overflow: auto;
     flex-grow: 1;
@@ -62,7 +64,7 @@ body {
     transition: color 0.3s ease;
 }
 
-/* Default Link Styling */
+/* Sidebar Link Styling */
 .list-group-item-action {
     color: #fff;
     text-decoration: none;
@@ -137,19 +139,129 @@ body {
     }
 }
 
-/* Hover Effect with Border Radius */
-.custom-hover {
-    background-color: #fff;
-    transition: all 0.3s ease;
-    border-radius: 4px;
+/* Button Styling */
+.btn {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    background-color: #258cfb;
+    color: white;
+    height: auto;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow with better depth */
+    transition: all 0.3s ease-in-out; /* Smooth transition for background and transform */
+    border: none; /* Remove default border */
+    cursor: pointer;
+    letter-spacing: 0.5px; /* Slightly spaced text */
+    text-transform: uppercase; /* Uppercase letters for a modern feel */
 }
 
-    .custom-hover:hover {
-        background-color: #f0f0f0;
-        color: #333;
-        cursor: pointer;
-        opacity: 0.9;
-    }
+/* Button Hover Effect */
+.btn:hover {
+    background-color: #1a76d2;
+    transform: translateY(-4px); /* Increased hover lift for better effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Button Active State */
+.btn:active {
+    background-color: #1a6ab0;
+    transform: translateY(1px); /* Slight movement to create a pressed effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle reset of shadow */
+}
+
+/* Button Focus Effect for Accessibility */
+.btn:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(37, 140, 251, 0.5), 0 0 15px rgba(37, 140, 251, 0.3); /* Light blue glow and bigger focus effect */
+}
+
+/* Icon Buttons */
+.custom-icon-btn {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 8px; /* More rounded edges */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    background: transparent;
+    border: 2px solid transparent; /* Adding subtle border on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for better appearance */
+    font-size: 18px; /* Slightly larger icon size */
+}
+
+/* Icon Button Colors */
+.edit-btn {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #ec971f; /* Darker Orange */
+}
+
+.delete-btn {
+    background-color: #d9534f;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c9302c; /* Darker Red */
+}
+
+.save-btn {
+    background-color: #5bc0de;
+    color: white;
+    margin-left: 10px;
+}
+
+.save-btn:hover {
+    background-color: #31b0d5; /* Darker Blue */
+}
+
+/* Icon Button Hover Effect */
+.custom-icon-btn:hover {
+    transform: translateY(-2px); /* Slight hover lift */
+    background-color: #e0e0e0; /* Light grey background on hover */
+    border-color: rgba(0, 123, 255, 0.3); /* Subtle border on hover */
+}
+
+/* Edit Button Hover */
+.edit-btn:hover {
+    background-color: #ec971f; /* Darker Orange (for edit button) */
+}
+
+/* Delete Button Hover */
+.delete-btn:hover {
+    background-color: #c9302c; /* Darker Red (for delete button) */
+}
+
+/* Icon Color */
+.custom-icon-btn span {
+    color: white;
+    font-size: 20px;
+}
+
+/* Icon Button Focus Effect for Accessibility */
+.custom-icon-btn:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6); /* Light blue glow on focus */
+}
+
+/* Disabled Button State */
+.btn:disabled, .custom-icon-btn:disabled {
+    background-color: #b5b5b5;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.7; /* Slight opacity to indicate disabled state */
+}
+
+/* Smooth Transition for All Elements */
+* {
+    transition: all 0.3s ease-in-out; /* Ensures a smooth transition on hover/focus */
+}
+
 
 /* Form Elements Styling */
 .form-group {
@@ -168,30 +280,6 @@ body {
     .form-control:focus {
         border-color: #258cfb;
         box-shadow: 0 0 0 0.25rem rgba(37, 140, 251, 0.25);
-    }
-
-/* Buttons Styling */
-.btn {
-    width: auto;
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 0.375rem;
-    background-color: #258cfb;
-    color: white;
-    height: auto;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-    .btn:hover {
-        background-color: #1a76d2;
-        transform: translateY(-2px); /* Subtle hover lift */
-    }
-
-    .btn:active {
-        background-color: #1a6ab0;
-        transform: translateY(0);
     }
 
 /* Image Preview Styling */
@@ -232,6 +320,17 @@ footer {
         margin: 0;
     }
 
+/* Image and Video Display */
+#capturedImage {
+    object-fit: cover;
+    border: 2px solid #007bff;
+}
+
+/* Centering video stream */
+video, #resultSection img {
+    border-radius: 8px;
+}
+
 /* Input Fields */
 .input-group {
     margin-bottom: 1.5rem;
@@ -246,14 +345,10 @@ a {
         color: #258cfb;
     }
 
-/* Add a smooth background gradient to page */
+/* Add a smooth background gradient to the body */
 body {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
 }
-
-
-
-
 
 /*Upload*/
 
@@ -330,71 +425,46 @@ body {
 }
 }
 
-/* Custom Icon Buttons */
-.custom-icon-btn {
-    display: inline-block;
-    padding: 8px;
-    border-radius: 5px;
+/* Base style for menu-toggle icon */
+#menu-toggle {
+    font-size: 24px;
+    color: #333; /* Default color */
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out; /* Smooth transition for all properties */
+    padding: 6px;
+    border-radius: 20%; /* Circular shape */
+    background-color: rgba(37, 140, 251, 0.1); /* Light blue background by default */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow by default */
 }
 
-.edit-btn {
-    background-color: #f0ad4e; /* Yellow/Orange */
-    margin-right: 10px;
-}
-
-    .edit-btn:hover {
-        background-color: #ec971f;
+    /* Hover Effect for inactive state (show circle and black icon) */
+    #menu-toggle:hover {
+        color: black; /* Icon turns black */
+        background-color: rgba(37, 140, 251, 0.2); /* Slightly darker background on hover */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
     }
 
-.delete-btn {
-    background-color: #d9534f; /* Red */
-}
-
-    .delete-btn:hover {
-        background-color: #c9302c;
+    /* Active state style */
+    #menu-toggle.active {
+        color: #258cfb; /* Blue color for active state */
+        background-color: transparent; /* No background for active state */
+        box-shadow: none; /* Remove shadow on active */
     }
 
-.save-btn {
-    background-color: #5bc0de; /* Blue */
-    margin-left: 10px;
-}
-
-    .save-btn:hover {
-        background-color: #31b0d5;
+    /* Inactive state (collapsed sidebar) hover effect */
+    #menu-toggle.inactive:hover {
+        background-color: rgba(0, 0, 0, 0.1); /* Light background color when hovered */
+        color: black; /* Icon turns black */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
     }
 
-.custom-icon-btn span {
-    color: white;
-    font-size: 20px;
-}
+    /* Focus Effect for accessibility */
+    #menu-toggle:focus {
+        outline: none; /* Remove outline */
+        box-shadow: 0 0 8px rgba(37, 140, 251, 0.6); /* Blue glow when focused */
+    }
 
-/* Adjust image size */
-.img-thumbnail {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 10px;
-}
-
-/* Ensuring Action Column Width */
-.w-25 {
-    width: 25%;
-}
-
-/* Adjust the capture and reset buttons */
-#captureBtn, #resetBtn {
-    padding: 10px;
-}
-
-/* Image display style */
-#capturedImage {
-    object-fit: cover;
-    border: 2px solid #007bff;
-}
-
-/* Centering video stream */
-video, #resultSection img {
-    border-radius: 8px;
+/* Smooth transition for all hover/focus effects */
+* {
+    transition: all 0.3s ease-in-out; /* Ensures a smooth transition */
 }

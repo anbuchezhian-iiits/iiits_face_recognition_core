@@ -1,6 +1,8 @@
-﻿@{
+﻿@model iiits_face_recognition_core.Models.Person
+
+@{
     Layout = "_Layout";
-    ViewData["Title"] = "New Registration";
+    ViewData["Title"] = "Edit Person";
 }
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
@@ -8,13 +10,13 @@
         <!-- Form Section -->
         <div class="col-md-8 col-lg-6">
             <div class="card p-4">
-                <h2 class="text-center">New Registration</h2>
+                <h2 class="text-center">Edit Person Details</h2>
 
-                <form asp-controller="Person" asp-action="Save" method="post" enctype="multipart/form-data">
-                    <!-- User's Name Block -->
+                <form asp-controller="Person" asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <!-- Person's Name Block -->
                     <div class="mb-4">
-                        <label for="personName" class="form-label">Person's Name</label>
-                        <input type="text" class="form-control" id="personName" name="PersonName" required />
+                        <label for="PersonName" class="form-label">Person's Name</label>
+                        <input type="text" class="form-control" id="PersonName" name="PersonName" value="@Model.PersonName" required />
                     </div>
 
                     <!-- Upload Image Card -->
@@ -30,7 +32,7 @@
                                     <label for="imageUpload1"></label>
                                 </div>
                                 <div class="avatar-preview">
-                                    <div id="imagePreview1" class="image-preview" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg');"></div>
+                                    <div id="imagePreview1" class="image-preview" style="background-image: url('@(string.IsNullOrEmpty(Model.Photo1Path) ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" : Model.Photo1Path)');"></div>
                                 </div>
                             </div>
 
@@ -41,14 +43,14 @@
                                     <label for="imageUpload2"></label>
                                 </div>
                                 <div class="avatar-preview">
-                                    <div id="imagePreview2" class="image-preview" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg');"></div>
+                                    <div id="imagePreview2" class="image-preview" style="background-image: url('@(string.IsNullOrEmpty(Model.Photo2Path) ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" : Model.Photo2Path)');"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-success w-100 mt-3">Save</button>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Save Changes</button>
                 </form>
             </div>
         </div>

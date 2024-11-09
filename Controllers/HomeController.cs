@@ -1,5 +1,6 @@
 using iiits_face_recognition_core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace iiits_face_recognition_core.Controllers
@@ -32,6 +33,13 @@ namespace iiits_face_recognition_core.Controllers
 
     public class RegistrationController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public RegistrationController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         // New Registration Page
         public IActionResult New()
         {
@@ -39,9 +47,10 @@ namespace iiits_face_recognition_core.Controllers
         }
 
         // Registered List Page
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            return View();
+            var persons = await _context.Persons.ToListAsync();
+            return View(persons);
         }
     }
 

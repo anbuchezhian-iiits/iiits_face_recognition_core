@@ -1,4 +1,7 @@
-﻿@{
+﻿@model IEnumerable<iiits_face_recognition_core.Models.Person>
+
+@{
+    Layout = "_Layout";
     ViewData["Title"] = "Registered List";
 }
 
@@ -29,48 +32,60 @@
                 </tr>
             </thead>
             <tbody id="registeredList">
-                <!-- Example Registered Names -->
-                <tr id="row1">
-                    <td>1</td>
-                    <td><span id="name1">John Doe</span></td>
-                    <td>
-                        <img id="image1_1" src="https://randomuser.me/api/portraits/men/1.jpg" alt="John Doe" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
-                        <img id="image1_2" src="https://randomuser.me/api/portraits/men/2.jpg" alt="John Doe" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
-                    </td>
-                    <td>
-                        <!-- Edit Icon -->
-                        <a href="#" class="custom-icon-btn edit-btn" onclick="editRow(1)">
-                            <span class="material-icons">edit</span>
-                        </a>
-                        <!-- Delete Icon -->
-                        <a href="#" class="custom-icon-btn delete-btn" data-id="1" onclick="confirmDelete(1)">
-                            <span class="material-icons">delete</span>
-                        </a>
-                    </td>
-                </tr>
-                <tr id="row2">
-                    <td>2</td>
-                    <td><span id="name2">Jane Smith</span></td>
-                    <td>
-                        <img id="image2_1" src="https://randomuser.me/api/portraits/women/1.jpg" alt="Jane Smith" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
-                        <img id="image2_2" src="https://randomuser.me/api/portraits/women/2.jpg" alt="Jane Smith" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
-                    </td>
-                    <td>
-                        <!-- Edit Icon -->
-                        <a href="#" class="custom-icon-btn edit-btn" onclick="editRow(2)">
-                            <span class="material-icons">edit</span>
-                        </a>
-                        <!-- Delete Icon -->
-                        <a href="#" class="custom-icon-btn delete-btn" data-id="2" onclick="confirmDelete(2)">
-                            <span class="material-icons">delete</span>
-                        </a>
-                    </td>
-                </tr>
-                <!-- More rows as needed -->
+                @if (Model.Any())
+                {
+                    @foreach (var person in Model)
+                    {
+                        <tr id="row@person.Id">
+                            <td>@person.Id</td>
+                            <td>@person.PersonName</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(person.Photo1Path))
+                                {
+                                    <img src="@person.Photo1Path" alt="@person.PersonName" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                }
+                                @if (!string.IsNullOrEmpty(person.Photo2Path))
+                                {
+                                    <img src="@person.Photo2Path" alt="@person.PersonName" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                }
+                            </td>
+                            <td>
+                                <!-- Edit Icon Button -->
+                                <form action="@Url.Action("Edit", "Person", new { id = person.Id })" method="get" class="d-inline">
+                                    <button type="submit" class="custom-icon-btn edit-btn">
+                                        <span class="material-icons">edit</span>
+                                    </button>
+                                </form>
+
+                                <!-- Delete Icon Button with Confirmation -->
+                                <form action="@Url.Action("Delete", "Person")" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@person.Id" />
+                                    <button type="submit" class="custom-icon-btn delete-btn" onclick="return confirm('Are you sure you want to delete this record?')">
+                                        <span class="material-icons">delete</span>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">No Data Available</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
 </div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        alert('@TempData["SuccessMessage"]');
+    </script>
+}
 
 <!-- Bootstrap 5 JS (for Modal functionality) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -90,79 +105,4 @@
             }
         });
     });
-
-    // Delete Confirmation Functionality
-    function confirmDelete(id) {
-        if (confirm("Are you sure you want to delete this record?")) {
-            // Replace with server-side delete action
-            alert("Record deleted: " + id);
-            // Optionally, remove the row after deletion
-            document.getElementById("row" + id).remove();
-        }
-    }
-
-    // Edit Functionality to Enable Image Upload and Show Save Button
-    function editRow(id) {
-        let image1 = document.getElementById("image" + id + "_1");
-        let image2 = document.getElementById("image" + id + "_2");
-
-        // Create file input fields for image upload
-        let input1 = document.createElement("input");
-        input1.type = "file";
-        input1.accept = ".png, .jpg, .jpeg";
-        input1.id = "inputImage" + id + "_1";
-
-        let input2 = document.createElement("input");
-        input2.type = "file";
-        input2.accept = ".png, .jpg, .jpeg";
-        input2.id = "inputImage" + id + "_2";
-
-        // Replace images with file inputs
-        image1.replaceWith(input1);
-        image2.replaceWith(input2);
-
-        // Create Save Button
-        let saveButton = document.createElement("a");
-        saveButton.href = "#";
-        saveButton.classList.add("custom-icon-btn", "save-btn");
-        saveButton.innerHTML = `<span class="material-icons">save</span>`;
-        saveButton.setAttribute("onclick", "saveRow(" + id + ")");
-
-        // Append Save Button
-        document.getElementById("row" + id).cells[3].appendChild(saveButton);
-    }
-
-    // Save Functionality
-    function saveRow(id) {
-        let input1 = document.getElementById("inputImage" + id + "_1");
-        let input2 = document.getElementById("inputImage" + id + "_2");
-
-        if (input1.files && input1.files[0] && input2.files && input2.files[0]) {
-            // Replace input fields with the new images (using file URL for demonstration purposes)
-            let image1 = document.createElement("img");
-            image1.src = URL.createObjectURL(input1.files[0]);
-            image1.alt = "Image 1";
-            image1.classList.add("img-thumbnail");
-            image1.style.width = "50px";
-            image1.style.height = "50px";
-            image1.style.objectFit = "cover";
-
-            let image2 = document.createElement("img");
-            image2.src = URL.createObjectURL(input2.files[0]);
-            image2.alt = "Image 2";
-            image2.classList.add("img-thumbnail");
-            image2.style.width = "50px";
-            image2.style.height = "50px";
-            image2.style.objectFit = "cover";
-
-            // Replace file inputs with the new images
-            document.getElementById("inputImage" + id + "_1").replaceWith(image1);
-            document.getElementById("inputImage" + id + "_2").replaceWith(image2);
-
-            // Remove Save Button
-            document.querySelector(".save-btn").remove();
-        } else {
-            alert("Please select both images.");
-        }
-    }
 </script>
