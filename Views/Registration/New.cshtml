@@ -17,6 +17,13 @@
                         <input type="text" class="form-control" id="personName" name="PersonName" required />
                     </div>
 
+                    @if (TempData["WarningMessage"] != null)
+                    {
+                        <div class="alert alert-warning">
+                            @TempData["WarningMessage"]
+                        </div>
+                    }
+
                     <!-- Upload Image Card -->
                     <div class="card mb-4">
                         <div class="card-header text-center">
@@ -46,7 +53,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Submit Button -->
                     <button type="submit" class="btn btn-success w-100 mt-3">Save</button>
                 </form>

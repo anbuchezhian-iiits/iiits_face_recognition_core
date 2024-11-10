@@ -1,8 +1,12 @@
 using iiits_face_recognition_core.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Register HttpClient
+builder.Services.AddHttpClient();  // Add HttpClient service
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

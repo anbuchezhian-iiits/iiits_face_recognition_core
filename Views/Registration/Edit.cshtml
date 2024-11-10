@@ -19,6 +19,13 @@
                         <input type="text" class="form-control" id="PersonName" name="PersonName" value="@Model.PersonName" required />
                     </div>
 
+                    @if (TempData["WarningMessage"] != null)
+                    {
+                        <div class="alert alert-warning">
+                            @TempData["WarningMessage"]
+                        </div>
+                    }
+
                     <!-- Upload Image Card -->
                     <div class="card mb-4">
                         <div class="card-header text-center">

@@ -32,7 +32,11 @@
                 </div>
                 <div class="card-body text-center">
                     <img id="capturedImage" src="#" alt="Captured Image" class="rounded mb-3" style="width: 100%; max-width: 400px; height: auto;">
-                    <h5 id="predictedResult" class="text-info"></h5>
+
+                    <!-- Bootstrap Alert for Result -->
+                    <div id="resultAlert" class="alert alert-info d-none" role="alert">
+                        <span id="predictedResult"></span>
+                    </div>
 
                     <!-- Reset Button -->
                     <button class="btn btn-secondary mt-3" id="resetBtn">
@@ -53,6 +57,7 @@
     const resultSection = document.getElementById('resultSection');
     const takePhotoCard = document.getElementById('takePhotoCard');
     const predictedResult = document.getElementById('predictedResult');
+    const resultAlert = document.getElementById('resultAlert');
     const resetBtn = document.getElementById('resetBtn');
 
     // Request camera access
@@ -70,28 +75,64 @@
     }
 
     // Capture photo from video
-    captureBtn.addEventListener("click", function () {
+    captureBtn.addEventListener("click", async function () {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-        
+
         // Display captured image and hide the Take a Photo card
         capturedImage.src = canvas.toDataURL('image/png');
         takePhotoCard.classList.add("d-none");
         resultSection.classList.remove("d-none");
 
-        // Simulate the recognition result
-        setTimeout(() => {
-            // Here, you would replace this with an actual prediction from your server or ML model
-            predictedResult.textContent = "Predicted Person: John Doe"; // Example predicted result
-        }, 500); // Simulate some processing delay
+        // Create a FormData object to send the image as multipart form data
+        const formData = new FormData();
+        const dataUrl = capturedImage.src;
+        const blob = dataURLtoBlob(dataUrl);
+        formData.append("capturedPhoto", blob, "captured_image.png");
+
+        // Send the captured image to the CaptureAndRecognize action in the controller
+        try {
+            const response = await fetch('@Url.Action("CaptureAndRecognize", "RecognizePerson")', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                console.log("Recognition successful: ", result);
+                predictedResult.textContent = `Predicted Person: ${result.recognizedPersonName || 'Unknown'}, Similarity: ${result.similarity || 'N/A'}%`;
+                resultAlert.classList.remove("d-none"); // Show the alert
+            } else {
+                predictedResult.textContent = "Recognition failed.";
+                resultAlert.classList.remove("d-none");
+                console.error("Error:", result.message);
+            }
+        } catch (error) {
+            predictedResult.textContent = "An error occurred while processing the image.";
+            resultAlert.classList.remove("d-none");
+            console.error("Error:", error);
+        }
     });
+
+    // Function to convert base64 to Blob
+    function dataURLtoBlob(dataURL) {
+        const byteString = atob(dataURL.split(',')[1]);
+        const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        const uintArray = new Uint8Array(arrayBuffer);
+        for (let i = 0; i < byteString.length; i++) {
+            uintArray[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([uintArray], { type: mimeString });
+    }
 
     // Reset button to start new prediction
     resetBtn.addEventListener("click", function () {
         // Clear the captured image and result
         capturedImage.src = "";
         predictedResult.textContent = "";
+        resultAlert.classList.add("d-none"); // Hide the alert
 
         // Show Take a Photo card again, hide the result section
         takePhotoCard.classList.remove("d-none");
